@@ -10,7 +10,7 @@ public class ResourceManager : MonoBehaviour
     public float sheep;
     public float wood;
     public float people;
-    public static float maxPeople;
+    public static float maxPeople = 800;
     public float ore;
 	public float wheat;
 

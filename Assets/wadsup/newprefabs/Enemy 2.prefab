@@ -3144,9 +3144,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8faae68905546a64d99e3458f56d59ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  health: 80
   speed: 5
-  damage: 5
+  damage: 10
   target: []
   currentTargetIndex: 0
   isAttacking: 0
@@ -5040,7 +5040,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6858141305862504295, guid: 9f996058a3125b44098fa17988efe144, type: 3}
       propertyPath: m_LocalScale.y
-      value: 70
+      value: 55.9
       objectReference: {fileID: 0}
     - target: {fileID: 6858141305862504295, guid: 9f996058a3125b44098fa17988efe144, type: 3}
       propertyPath: m_LocalScale.z
@@ -5048,15 +5048,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6858141305862504295, guid: 9f996058a3125b44098fa17988efe144, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 70.5
+      value: 82.9
       objectReference: {fileID: 0}
     - target: {fileID: 6858141305862504295, guid: 9f996058a3125b44098fa17988efe144, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 24.9
+      value: 28.2
       objectReference: {fileID: 0}
     - target: {fileID: 6858141305862504295, guid: 9f996058a3125b44098fa17988efe144, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 39.1
+      value: 40.6
       objectReference: {fileID: 0}
     - target: {fileID: 6858141305862504295, guid: 9f996058a3125b44098fa17988efe144, type: 3}
       propertyPath: m_LocalRotation.w

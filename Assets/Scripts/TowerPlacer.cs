@@ -229,9 +229,7 @@ public class TowerPlacer : MonoBehaviour
             Debug.Log(hit.transform.tag);
             if (towerController != null)
             {
-                produceUpgradePanel.SetActive(false);
                 towerUpgradePanel.SetActive(true);
-                gateUpgradePanel.SetActive(false);
 
                 towerName.SetText("Tower");
                 towerSpeed.SetText(towerController.attackRate.ToString());
@@ -261,8 +259,6 @@ public class TowerPlacer : MonoBehaviour
             Debug.Log(hit.transform.tag);
             if (gateController != null)
             {
-                produceUpgradePanel.SetActive(false);
-                towerUpgradePanel.SetActive(false);
                 gateUpgradePanel.SetActive(true);
 
                 gateName.SetText(currentGate.name);
@@ -303,7 +299,7 @@ public class TowerPlacer : MonoBehaviour
             Quaternion.identity
         );
 
-        if (colliders.Length <= 2) // Only colliding with itself or ground
+        if (colliders.Length <= 3) // Only colliding with itself or ground
         {
             //pendingTower.GetComponent<Tower>().enabled = true;
             isPlacing = false;
@@ -331,7 +327,7 @@ public class TowerPlacer : MonoBehaviour
             towerController.level++;
             towerController.upgradeCost = towerController.upgradeCost + 50;
 
-            towerName.SetText(currentTower.name);
+            towerName.SetText("Tower");
             towerSpeed.SetText(towerController.attackRate.ToString());
             towerDamage.SetText(towerController.bulletDamage.ToString());
             towerLevel.SetText("Level " + towerController.level.ToString());

@@ -19,6 +19,7 @@ public class TowerPlacer : MonoBehaviour
     public GameObject towerUpgradePanel;
     public GameObject gateUpgradePanel;
     public GameObject shopPanel;
+    public GameObject towerBuyerPanel;
 
     //tower panel variables
     [Header("TOWER CURRENT LEVEL VARIABLES")]
@@ -63,11 +64,13 @@ public class TowerPlacer : MonoBehaviour
     TowerController towerController;
     GateController gateController;
     Shop shop;
+    TowerBuyer towerBuyer;
 
     Transform currentGate;
     Transform currentTower;
     Transform currentProduce;
     Transform currentShop;
+    Transform currentTowerBuyer;
     public ResourceManager resourceManager;
 
 
@@ -85,6 +88,7 @@ public class TowerPlacer : MonoBehaviour
             TowerClicker();
             GateClicker();
             ShopClicker();
+            TowerBuyerClicker();
         }
 
         // While in placement mode
@@ -125,12 +129,16 @@ public class TowerPlacer : MonoBehaviour
             Debug.Log("Can't place here!");
         }
     }
-    void StartPlacing()
+    public void StartPlacing()
     {
-        isPlacing = true;
-        pendingTower = Instantiate(towerPrefab);
-        // Disable tower functionality while placing
-        //pendingTower.GetComponent<Tower>().enabled = false;
+        if (resourceManager.money>=300f)
+        {
+            isPlacing = true;
+            pendingTower = Instantiate(towerPrefab);
+            // Disable tower functionality while placing
+            //pendingTower.GetComponent<Tower>().enabled = false;
+        }
+
     }
     void ProduceClicker()
     {
@@ -156,15 +164,6 @@ public class TowerPlacer : MonoBehaviour
                 produceSpeedN.SetText((buildingController.productionTime + 1).ToString());
                 produceAmountN.SetText((buildingController.productionAmount + 1).ToString());
                 produceLevelN.SetText((buildingController.level + 1).ToString());
-
-               // namee.SetText(hit.transform.root.name);
-               // attackSpeed.SetText(e.productionTime.ToString());
-               // Debug.Log("a");
-               // damage.SetText(e.productionAmount.ToString());
-               // Lvl.SetText(e.level.ToString());
-               // nextLvl.SetText((e.level+1).ToString());
-               // attackSpeedNextLvl.SetText((e.productionTime-1).ToString());
-               // damageNextLvl.SetText((e.productionAmount+1).ToString());
             }
             else
             {
@@ -195,6 +194,31 @@ public class TowerPlacer : MonoBehaviour
             }
         }
     }
+
+    void TowerBuyerClicker()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            towerBuyer = hit.transform.GetComponent<TowerBuyer>();
+            currentTowerBuyer = hit.transform;
+            if (towerBuyer != null)
+            {
+                Debug.Log("lolol");
+                towerBuyerPanel.SetActive(true);
+               // towerUpgradePanel.SetActive(false);
+               // produceUpgradePanel.SetActive(false);
+               // gateUpgradePanel.SetActive(false);
+               // shopPanel.SetActive(false);
+            }
+            else
+            {
+                towerBuyerPanel.SetActive(false);
+            }
+        }
+    }
+
+
     void TowerClicker()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -284,6 +308,7 @@ public class TowerPlacer : MonoBehaviour
             //pendingTower.GetComponent<Tower>().enabled = true;
             isPlacing = false;
             pendingTower = null;
+            resourceManager.removeGold(300f);
         }
         else
         {

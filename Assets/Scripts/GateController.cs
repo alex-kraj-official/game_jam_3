@@ -17,6 +17,11 @@ public class GateController : MonoBehaviour
 
     public TextMeshProUGUI CurrentGateHealth;
 
+    private void Start()
+    {
+        CurrentGateHealth.SetText(currentHealth.ToString());
+    }
+
     private void Update()
     {
         if (currentHealth <= 0)
@@ -24,14 +29,20 @@ public class GateController : MonoBehaviour
             manager.loseGame();
             Destroy(this.gameObject);
         }
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            takeDamage(10);
+        }
     }
     public void takeDamage(float amount)
     {
         currentHealth = currentHealth + armor - amount;
+        CurrentGateHealth.SetText(currentHealth.ToString());
     }
     public void repair()
     {
         currentHealth = currentHealth + 5 * lvl;
+        CurrentGateHealth.SetText(currentHealth.ToString());
     }
     public void upgrade()
     {
@@ -40,6 +51,6 @@ public class GateController : MonoBehaviour
         armor = armor + 3;
         lvl++;
         upgradeCost = upgradeCost + 50;
+        CurrentGateHealth.SetText(currentHealth.ToString());
     }
-
 }

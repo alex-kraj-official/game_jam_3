@@ -130,6 +130,9 @@ public class GameManager : MonoBehaviour
     {
         gameFinishedPanel.SetActive(false);
         gameOverPanel.SetActive(false);
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
         Time.timeScale = 1f;
     }
     public void exitGame()

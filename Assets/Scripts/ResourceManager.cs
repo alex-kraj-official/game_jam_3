@@ -23,16 +23,27 @@ public class ResourceManager : MonoBehaviour
     public TextMeshProUGUI oreText;
     public TextMeshProUGUI wheatText;
 
+    private void Start()
+    {
+        if (moneyText != null) updateText(moneyText, money);
+        if (sheepText != null) updateText(sheepText, sheep);
+        if (woodText != null) updateText(woodText, wood);
+        if (peopleText != null) updateText(peopleText, people);
+        if (maxPeopleText != null) updateText(maxPeopleText, maxPeople);
+        if (oreText != null) updateText(oreText, ore);
+        if (wheatText != null) updateText(wheatText, wheat);
+    }
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            getSheep(10f);
-        }
-        if (Input.GetKeyDown(KeyCode.W))
-        {
-            removeSheep(10f);
-        }
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+        //    getSheep(10f);
+        //}
+        //if (Input.GetKeyDown(KeyCode.W))
+        //{
+        //    removeSheep(10f);
+        //}
     }
     public void updateText(TextMeshProUGUI text, float number)
     {
@@ -45,7 +56,7 @@ public class ResourceManager : MonoBehaviour
     }
     public void removeSheep(float amount)
     {
-        sheep = sheep - amount;
+        if(sheep - amount > 1) sheep = sheep - amount;
         updateText(sheepText, sheep);
     }
     public void getGold(float amount)
@@ -55,7 +66,7 @@ public class ResourceManager : MonoBehaviour
     }
     public void removeGold(float amount)
     {
-        money = money - amount;
+        if (money - amount > 1) money = money - amount;
         updateText(moneyText, money);
     }
     public void getWood(float amount)
@@ -65,7 +76,7 @@ public class ResourceManager : MonoBehaviour
     }
     public void removeWood(float amount)
     {
-        wood = wood - amount;
+        if (wood - amount > 1) wood = wood - amount;
         updateText(woodText, wood);
     }
     public void getPeople(float amount)
@@ -75,7 +86,7 @@ public class ResourceManager : MonoBehaviour
     }
     public void removePeople(float amount)
     {
-        people = people - amount;
+        if (people - amount > 1) people = people - amount;
         updateText(peopleText, people);
     }
     public void getOre(float amount)
@@ -85,7 +96,7 @@ public class ResourceManager : MonoBehaviour
     }
     public void removeOre(float amount)
     {
-        ore = ore - amount;
+        if (ore - amount > 1) ore = ore - amount;
         updateText(oreText, ore);
     }
     public void getWheat(float amount)
@@ -95,7 +106,7 @@ public class ResourceManager : MonoBehaviour
     }
     public void removeWheat(float amount)
     {
-        wheat = wheat - amount;
+        if (wheat - amount > 1) wheat = wheat - amount;
         updateText(wheatText, wheat);
     }
 

@@ -13,6 +13,11 @@ public class GameManager : MonoBehaviour
     public GameObject taxPanel; // UI panel that gives the choice
     public TextMeshProUGUI levelText;
 
+    [SerializeField] private GameObject OvrestartBtn;
+    [SerializeField] private GameObject OvexitBtn;
+    [SerializeField] private GameObject WinrestartBtn;
+    [SerializeField] private GameObject WinexitBtn;
+
     public GameObject gameOverPanel;
     public GameObject gameFinishedPanel;
 
@@ -51,9 +56,8 @@ public class GameManager : MonoBehaviour
     }
     void NewDay()
     {
-
         day++;
-        levelText.SetText("Day: " + day.ToString());
+        levelText.SetText(day.ToString());
     }
     public void PayWithSheep()
     {
@@ -110,7 +114,7 @@ public class GameManager : MonoBehaviour
     void UpdateLevelUI()
     {
         if (levelText != null)
-            levelText.text = "Level: " + currentLevel;
+            levelText.text = currentLevel.ToString();
     }
     public void winGame()
     {
@@ -130,6 +134,7 @@ public class GameManager : MonoBehaviour
     }
     public void exitGame()
     {
-        
+        gameOverPanel.SetActive(false);
+        Application.Quit();
     }
 }

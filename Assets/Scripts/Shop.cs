@@ -43,48 +43,72 @@ public class Shop : MonoBehaviour
 
     public void increaseAmountSheep(float amount)
     {
-        sheepAmount = sheepAmount + 10;
-        amountInputSheep.SetText(sheepAmount.ToString());
+        if (sheepAmount < 500)
+        {
+            sheepAmount = sheepAmount + 10;
+            amountInputSheep.SetText(sheepAmount.ToString());
+        }
     }
     public void decreaseAmountSheep(float amount)
     {
-        sheepAmount = sheepAmount - 10;
-        amountInputSheep.SetText(sheepAmount.ToString());
+        if (sheepAmount > 0)
+        {
+            sheepAmount = sheepAmount - 10;
+            amountInputSheep.SetText(sheepAmount.ToString());
+        }
     }
     public void increaseAmountWheat(float amount)
     {
-        wheatAmount = wheatAmount + 10;
-        amountInputWheat.SetText(wheatAmount.ToString());
+        if (wheatAmount < 500)
+        {
+            wheatAmount = wheatAmount + 10;
+            amountInputWheat.SetText(wheatAmount.ToString());
+        }
     }
     public void decreaseAmountWheat(float amount)
     {
-        wheatAmount = wheatAmount - 10;
-        amountInputWheat.SetText(wheatAmount.ToString());
+        if (wheatAmount > 0)
+        {
+            wheatAmount = wheatAmount - 10;
+            amountInputWheat.SetText(wheatAmount.ToString());
+        }
     }
     public void increaseAmountOre(float amount)
     {
-        oreAmount = oreAmount + 10;
-        amountInputOre.SetText(oreAmount.ToString());
+        if (oreAmount < 500)
+        {
+            oreAmount = oreAmount + 10;
+            amountInputOre.SetText(oreAmount.ToString());
+        }
     }
     public void decreaseAmountOre(float amount)
     {
-        oreAmount = oreAmount - 10;
-        amountInputOre.SetText(oreAmount.ToString());
+        if (oreAmount > 0)
+        {
+            oreAmount = oreAmount - 10;
+            amountInputOre.SetText(oreAmount.ToString());
+        }
     }
     public void increaseAmountWood(float amount)
     {
-        woodAmount = woodAmount + 10;
-        amountInputWood.SetText(woodAmount.ToString());
+        if (woodAmount < 500)
+        {
+            woodAmount = woodAmount + 10;
+            amountInputWood.SetText(woodAmount.ToString());
+        }
     }
     public void decreaseAmountWood(float amount)
     {
-        woodAmount = woodAmount - 10;
-        amountInputWood.SetText(woodAmount.ToString());
+        if (woodAmount > 0)
+        {
+            woodAmount = woodAmount - 10;
+            amountInputWood.SetText(woodAmount.ToString());
+        }
     }
     public void sellSheep(float amount)
     {
         amount = sheepAmount;
-        if (resourceManager != null && resourceManager.sheep>=amount)
+        if (resourceManager != null && resourceManager.sheep >= amount)
         {
             resourceManager.removeSheep(amount);
             resourceManager.getGold(amount*sheepSellPrice);

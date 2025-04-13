@@ -2,23 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public int currentLevel = 1;
     public int day = 1;
-    public float taxInterval = 10f; // Time between tax requests
+    public float dayLength = 30f;
+    public float taxInterval = 5f; // Time between tax requests
     public GameObject taxPanel; // UI panel that gives the choice
     public TextMeshProUGUI levelText;
+
+    public GameObject gameOverPanel;
+    public GameObject gameFinishedPanel;
 
     private bool waitingForChoice = false;
 
     public EnemySpawner spawner;
+    public ResourceManager manager;
 
 
+    private void Update()
+    {
+        if (day >= 20)
+        {
+            winGame();
+        }
+        if (manager.people<1)
+        {
+            loseGame();
+        }
+    }
     void Start()
     {
         InvokeRepeating(nameof(TriggerTaxEvent), taxInterval, taxInterval);
+        InvokeRepeating(nameof(NewDay), dayLength, dayLength);
+
         UpdateLevelUI();
     }
     void TriggerTaxEvent()
@@ -30,19 +49,34 @@ public class GameManager : MonoBehaviour
             waitingForChoice = true;
         }
     }
+    void NewDay()
+    {
+
+        day++;
+        levelText.SetText("Day: " + day.ToString());
+    }
     public void PayWithSheep()
     {
-        Debug.Log("Player paid tax.");
-        taxPanel.SetActive(false);
-        Time.timeScale = 1f;
-        waitingForChoice = false;
+        if (manager.people>2 && manager.sheep>500)
+        {
+            manager.removePeople(2);
+            manager.removeSheep(500);
+            Debug.Log("Player paid tax.");
+            taxPanel.SetActive(false);
+            Time.timeScale = 1f;
+            waitingForChoice = false;
+        }
     }
     public void PayWithPeople()
     {
-        Debug.Log("Player paid tax.");
-        taxPanel.SetActive(false);
-        Time.timeScale = 1f;
-        waitingForChoice = false;
+        if (manager.people>60)
+        {
+            manager.removePeople(60);
+            Debug.Log("Player paid tax.");
+            taxPanel.SetActive(false);
+            Time.timeScale = 1f;
+            waitingForChoice = false;
+        }
     }
 
     public void FightEnemy()
@@ -77,5 +111,25 @@ public class GameManager : MonoBehaviour
     {
         if (levelText != null)
             levelText.text = "Level: " + currentLevel;
+    }
+    public void winGame()
+    {
+        Time.timeScale = 0f;
+        gameFinishedPanel.SetActive(true);
+    }
+    public void loseGame()
+    {
+        Time.timeScale = 0f;
+        gameOverPanel.SetActive(true);
+    }
+    public void restartGame()
+    {
+        gameFinishedPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
+        Time.timeScale = 1f;
+    }
+    public void exitGame()
+    {
+        
     }
 }

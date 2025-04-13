@@ -27,7 +27,6 @@ public class EnemyController : MonoBehaviour
         gateController = FindObjectOfType<GateController>();
         gate = GameObject.FindGameObjectWithTag("Gate");
         animator = intact.GetComponent<Animator>();
-        animator.Play("Giant@Run 01 - Forward"); // Name of your clip exactly
     }
 
     private void Update()
@@ -51,7 +50,7 @@ public class EnemyController : MonoBehaviour
 
     void MoveToTarget()
     {
-        if (currentTargetIndex >= target.Length)
+        if (currentTargetIndex >= target.Length && gate != null)
         {
             // Rotate toward the gate
             Vector3 directionToGate = (gate.transform.position - transform.position).normalized;
@@ -72,19 +71,22 @@ public class EnemyController : MonoBehaviour
         }
 
         // Normal movement logic
-        Vector3 direction = (target[currentTargetIndex].position - transform.position).normalized;
-
-        if (direction != Vector3.zero)
+        if (gate != null)
         {
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
-        }
+            Vector3 direction = (target[currentTargetIndex].position - transform.position).normalized;
 
-        transform.position = Vector3.MoveTowards(transform.position, target[currentTargetIndex].position, speed * Time.deltaTime);
+            if (direction != Vector3.zero)
+            {
+                Quaternion lookRotation = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+            }
 
-        if (Vector3.Distance(transform.position, target[currentTargetIndex].position) < 0.01f)
-        {
-            currentTargetIndex++;
+            transform.position = Vector3.MoveTowards(transform.position, target[currentTargetIndex].position, speed * Time.deltaTime);
+
+            if (Vector3.Distance(transform.position, target[currentTargetIndex].position) < 0.01f)
+            {
+                currentTargetIndex++;
+            }
         }
     }
 

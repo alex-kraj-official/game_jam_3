@@ -12,10 +12,13 @@ public class GateController : MonoBehaviour
     public float upgradeCost;
     public float repairCost;
 
+    public GameManager manager;
+
     private void Update()
     {
         if (currentHealth <= 0)
         {
+            manager.loseGame();
             Destroy(this.gameObject);
         }
     }

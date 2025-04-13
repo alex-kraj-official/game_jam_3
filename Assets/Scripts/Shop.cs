@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Xml.Serialization;
 
 public class Shop : MonoBehaviour
 {
@@ -25,6 +26,12 @@ public class Shop : MonoBehaviour
 
     public float oreSellPrice;
     public float oreBuyPrice;
+
+    //
+    public float sheepAmount;
+    public float wheatAmount;
+    public float oreAmount;
+    public float woodAmount;
 
     public void setSheepAmountSell()
     {
@@ -62,6 +69,39 @@ public class Shop : MonoBehaviour
         {
             Debug.LogWarning("Invalid number entered!");
         }
+    }
+
+    public void increaseAmountSheep(float amount)
+    {
+        sheepAmount = sheepAmount + 10;
+    }
+    public void decreaseAmountSheep(float amount)
+    {
+        sheepAmount = sheepAmount - 10;
+    }
+    public void increaseAmountWheat(float amount)
+    {
+        wheatAmount = wheatAmount + 10;
+    }
+    public void decreaseAmountWheat(float amount)
+    {
+        wheatAmount = wheatAmount - 10;
+    }
+    public void increaseAmountOre(float amount)
+    {
+        oreAmount = oreAmount + 10;
+    }
+    public void decreaseAmountOre(float amount)
+    {
+        oreAmount = oreAmount - 10;
+    }
+    public void increaseAmountWood(float amount)
+    {
+        woodAmount = woodAmount + 10;
+    }
+    public void decreaseAmountWood(float amount)
+    {
+        woodAmount = woodAmount - 10;
     }
     public void sellSheep(float amount)
     {

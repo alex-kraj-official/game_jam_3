@@ -33,6 +33,14 @@ public class Shop : MonoBehaviour
     public float oreAmount;
     public float woodAmount;
 
+    private void Start()
+    {
+        amountInputSheep.SetText("0");
+        amountInputWood.SetText("0");
+        amountInputOre.SetText("0");
+        amountInputWheat.SetText("0");
+    }
+
     public void increaseAmountSheep(float amount)
     {
         sheepAmount = sheepAmount + 10;
@@ -75,7 +83,8 @@ public class Shop : MonoBehaviour
     }
     public void sellSheep(float amount)
     {
-        if (resourceManager != null)
+        amount = sheepAmount;
+        if (resourceManager != null && resourceManager.sheep>=amount)
         {
             resourceManager.removeSheep(amount);
             resourceManager.getGold(amount*sheepSellPrice);
@@ -83,6 +92,7 @@ public class Shop : MonoBehaviour
     }
     public void buySheep(float amount)
     {
+        amount = sheepAmount;
         if (resourceManager != null)
         {
             resourceManager.getSheep(amount);
@@ -91,7 +101,8 @@ public class Shop : MonoBehaviour
     }
     public void sellWood(float amount)
     {
-        if (resourceManager != null)
+        amount = woodAmount;
+        if (resourceManager != null && resourceManager.wood >= amount)
         {
             resourceManager.removeWood(amount);
             resourceManager.getGold(amount * woodSellPrice);
@@ -99,6 +110,7 @@ public class Shop : MonoBehaviour
     }
     public void buyWood(float amount)
     {
+        amount = woodAmount;
         if (resourceManager != null)
         {
             resourceManager.getWood(amount);
@@ -107,7 +119,8 @@ public class Shop : MonoBehaviour
     }
     public void sellWheat(float amount)
     {
-        if (resourceManager != null)
+        amount = wheatAmount;
+        if (resourceManager != null && resourceManager.wheat >= amount)
         {
             resourceManager.removeWheat(amount);
             resourceManager.getGold(amount * wheatSellPrice);
@@ -115,6 +128,7 @@ public class Shop : MonoBehaviour
     }
     public void buyWheat(float amount)
     {
+        amount = wheatAmount;
         if (resourceManager != null)
         {
             resourceManager.getWheat(amount);
@@ -123,7 +137,8 @@ public class Shop : MonoBehaviour
     }
     public void sellOre(float amount)
     {
-        if (resourceManager != null)
+        amount = oreAmount;
+        if (resourceManager != null && resourceManager.ore >= amount)
         {
             resourceManager.removeOre(amount);
             resourceManager.getGold(amount * oreSellPrice);
@@ -131,6 +146,7 @@ public class Shop : MonoBehaviour
     }
     public void buyOre(float amount)
     {
+        amount = oreAmount;
         if (resourceManager != null)
         {
             resourceManager.getOre(amount);

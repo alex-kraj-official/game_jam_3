@@ -12114,6 +12114,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: grass
       objectReference: {fileID: 0}
+    - target: {fileID: 6402123201873790027, guid: 1609768cf11636645ae7634ea3ceb26e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6402123201873790027, guid: 1609768cf11636645ae7634ea3ceb26e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -17.95
+      objectReference: {fileID: 0}
     - target: {fileID: 6890900829986290880, guid: 1609768cf11636645ae7634ea3ceb26e, type: 3}
       propertyPath: manager
       value: 
@@ -24037,8 +24045,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLevel: 1
   day: 1
-  dayLength: 60
-  taxInterval: 60
+  dayLength: 20
+  taxInterval: 20
   taxPanel: {fileID: 1914725417}
   levelText: {fileID: 887476808}
   OvrestartBtn: {fileID: 1477554981}

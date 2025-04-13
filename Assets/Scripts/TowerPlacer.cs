@@ -18,6 +18,7 @@ public class TowerPlacer : MonoBehaviour
     public GameObject produceUpgradePanel;
     public GameObject towerUpgradePanel;
     public GameObject gateUpgradePanel;
+    public GameObject shopPanel;
 
     //tower panel variables
     [Header("TOWER CURRENT LEVEL VARIABLES")]
@@ -61,10 +62,12 @@ public class TowerPlacer : MonoBehaviour
     BuildingController buildingController;
     TowerController towerController;
     GateController gateController;
+    Shop shop;
 
     Transform currentGate;
     Transform currentTower;
     Transform currentProduce;
+    Transform currentShop;
     public ResourceManager resourceManager;
 
 
@@ -81,6 +84,7 @@ public class TowerPlacer : MonoBehaviour
             ProduceClicker();
             TowerClicker();
             GateClicker();
+            ShopClicker();
         }
 
         // While in placement mode
@@ -166,6 +170,28 @@ public class TowerPlacer : MonoBehaviour
             {
                 Debug.Log("no buildingcontroller");
                 produceUpgradePanel.SetActive(false);
+            }
+        }
+    }
+    void ShopClicker()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            shop = hit.transform.GetComponent<Shop>();
+            currentShop = hit.transform;
+            Debug.Log(hit.transform.tag);
+            if (shop != null)
+            {
+                Debug.Log("asdasd");
+                towerUpgradePanel.SetActive(false);
+                produceUpgradePanel.SetActive(false);
+                gateUpgradePanel.SetActive(false);
+                shopPanel.SetActive(true);
+            }
+            else
+            {
+                shopPanel.SetActive(false);
             }
         }
     }

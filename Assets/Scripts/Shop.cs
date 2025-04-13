@@ -10,10 +10,10 @@ public class Shop : MonoBehaviour
     public ResourceManager resourceManager;
 
     //input fields
-    public TMP_InputField amountInput;
-    public Button plus;
-    public Button minus;
-
+    public TextMeshProUGUI amountInputSheep;
+    public TextMeshProUGUI amountInputWood;
+    public TextMeshProUGUI amountInputOre;
+    public TextMeshProUGUI amountInputWheat;
     //sell and buy prices
     public float woodSellPrice;
     public float woodBuyPrice;
@@ -33,75 +33,45 @@ public class Shop : MonoBehaviour
     public float oreAmount;
     public float woodAmount;
 
-    public void setSheepAmountSell()
-    {
-        string inputText = amountInput.text;
-
-        int result;
-        if (int.TryParse(inputText, out result))
-        {
-            float result2;
-            float.TryParse(inputText, out result2);
-            sellSheep(result2);
-            Debug.Log("You entered: " + result2);
-            // You can now use 'result' as an integer
-        }
-        else
-        {
-            Debug.LogWarning("Invalid number entered!");
-        }
-    }
-    public void setSheepAmountBuy()
-    {
-        string inputText = amountInput.text;
-
-        int result;
-        if (int.TryParse(inputText, out result))
-        {
-            float result2;
-            float.TryParse(inputText, out result2);
-            buySheep(result2);
-            sellSheep(result2);
-            Debug.Log("You entered: " + result2);
-            // You can now use 'result' as an integer
-        }
-        else
-        {
-            Debug.LogWarning("Invalid number entered!");
-        }
-    }
-
     public void increaseAmountSheep(float amount)
     {
         sheepAmount = sheepAmount + 10;
+        amountInputSheep.SetText(sheepAmount.ToString());
     }
     public void decreaseAmountSheep(float amount)
     {
         sheepAmount = sheepAmount - 10;
+        amountInputSheep.SetText(sheepAmount.ToString());
     }
     public void increaseAmountWheat(float amount)
     {
         wheatAmount = wheatAmount + 10;
+        amountInputWheat.SetText(wheatAmount.ToString());
     }
     public void decreaseAmountWheat(float amount)
     {
         wheatAmount = wheatAmount - 10;
+        amountInputWheat.SetText(wheatAmount.ToString());
     }
     public void increaseAmountOre(float amount)
     {
         oreAmount = oreAmount + 10;
+        amountInputOre.SetText(oreAmount.ToString());
     }
     public void decreaseAmountOre(float amount)
     {
         oreAmount = oreAmount - 10;
+        amountInputOre.SetText(oreAmount.ToString());
     }
     public void increaseAmountWood(float amount)
     {
         woodAmount = woodAmount + 10;
+        amountInputWood.SetText(woodAmount.ToString());
     }
     public void decreaseAmountWood(float amount)
     {
         woodAmount = woodAmount - 10;
+        amountInputWood.SetText(woodAmount.ToString());
     }
     public void sellSheep(float amount)
     {

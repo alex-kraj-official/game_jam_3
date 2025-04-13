@@ -14,6 +14,14 @@ public class ProjectileController : MonoBehaviour
         if (target != null)
         {
             transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+
+            Vector3 directionToGate = (target.transform.position - transform.position).normalized;
+
+            if (directionToGate != Vector3.zero)
+            {
+                Quaternion lookRotation = Quaternion.LookRotation(directionToGate);
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+            }
         }
         else
         {

@@ -6307,7 +6307,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &420266014
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6322,8 +6322,8 @@ RectTransform:
   m_Children:
   - {fileID: 547862187}
   - {fileID: 697235509}
-  - {fileID: 633388679}
   - {fileID: 639291175}
+  - {fileID: 633388679}
   m_Father: {fileID: 1432414375}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -24877,7 +24877,7 @@ MonoBehaviour:
   money: 500
   sheep: 3000
   wood: 300
-  people: 100
+  people: 500
   ore: 300
   wheat: 300
   moneyText: {fileID: 1899171828}

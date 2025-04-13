@@ -8742,6 +8742,13 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< Updated upstream
+=======
+    - target: {fileID: 1603551023640226346, guid: db56cc4acba061a4f84b39b3d8f6eeaf, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+>>>>>>> Stashed changes
     - target: {fileID: 1642273115631975289, guid: db56cc4acba061a4f84b39b3d8f6eeaf, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -9165,6 +9172,22 @@ PrefabInstance:
     - target: {fileID: 6876569451087304063, guid: db56cc4acba061a4f84b39b3d8f6eeaf, type: 3}
       propertyPath: m_enableVertexGradient
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7560684102799362240, guid: db56cc4acba061a4f84b39b3d8f6eeaf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7560684102799362240, guid: db56cc4acba061a4f84b39b3d8f6eeaf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7560684102799362240, guid: db56cc4acba061a4f84b39b3d8f6eeaf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7560684102799362240, guid: db56cc4acba061a4f84b39b3d8f6eeaf, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PauseMenu, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7758637305070222965, guid: db56cc4acba061a4f84b39b3d8f6eeaf, type: 3}
       propertyPath: m_AnchorMax.y

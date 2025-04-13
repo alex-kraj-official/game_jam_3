@@ -7169,6 +7169,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 553697427066198230, guid: d63699b30957dd847ba38c4d6535ea84, type: 3}
+      propertyPath: health
+      value: 10000
+      objectReference: {fileID: 0}
     - target: {fileID: 5873772886827143618, guid: d63699b30957dd847ba38c4d6535ea84, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -8422,8 +8426,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLevel: 1
   day: 1
-  dayLength: 1
-  taxInterval: 5
+  dayLength: 100
+  taxInterval: 5000
   taxPanel: {fileID: 1459241210}
   levelText: {fileID: 1952405545}
   gameOverPanel: {fileID: 1735939109}

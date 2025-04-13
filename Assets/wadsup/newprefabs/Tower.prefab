@@ -406,4 +406,4 @@ MonoBehaviour:
   attackRate: 0.5
   upgradeCost: 0
   level: 0
-  bulletDamage: 5
+  bulletDamage: 20

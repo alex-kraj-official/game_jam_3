@@ -56,8 +56,8 @@ public class TowerController : MonoBehaviour
         if (enemy != null)
         {
             Vector3 direction = enemy.position - top.position;
-            Quaternion rotation = Quaternion.LookRotation(direction);
-            top.rotation = rotation;
+            //Quaternion rotation = Quaternion.LookRotation(direction);
+            //top.rotation = rotation;
             if (Time.time >= nextTimeToFire)
             {
                 shoot();

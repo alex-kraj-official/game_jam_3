@@ -129,7 +129,7 @@ public class MainMenu : MonoBehaviour
     public void PlayGame()
     {
         //SceneManager.SetActiveScene(SceneManagerOwn.scene2);
-        SceneManager.LoadScene("AlexScene");
+        SceneManager.LoadScene("GergoScene 1");
     }
 
     public void GeneralSettingsPanel()

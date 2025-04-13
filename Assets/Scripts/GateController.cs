@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using TMPro;
 
 public class GateController : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class GateController : MonoBehaviour
     public float repairCost;
 
     public GameManager manager;
+
+    public TextMeshProUGUI CurrentGateHealth;
 
     private void Update()
     {

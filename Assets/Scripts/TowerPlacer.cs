@@ -347,22 +347,25 @@ public class TowerPlacer : MonoBehaviour
     {
         if (resourceManager.money >= buildingController.upgradeCost)
         {
-            buildingController.productionTime++;
-            buildingController.productionAmount++;
-            buildingController.level++;
-            buildingController.upgradeCost = buildingController.upgradeCost + 50;
+            if (buildingController.productionTime > 0.1)
+            {
+                buildingController.productionTime = ((buildingController.productionTime - 0.1f)*10f)*0.1f;
+                buildingController.productionAmount++;
+                buildingController.level++;
+                buildingController.upgradeCost = buildingController.upgradeCost + 50;
 
-            produceName.SetText(currentProduce.name);
-            produceSpeed.SetText(buildingController.productionTime.ToString());
-            produceAmount.SetText(buildingController.productionAmount.ToString());
-            produceLevel.SetText("Level " + buildingController.level.ToString());
-            produceCost.SetText(buildingController.upgradeCost.ToString());
+                produceName.SetText(currentProduce.name);
+                produceSpeed.SetText(buildingController.productionTime.ToString());
+                produceAmount.SetText(buildingController.productionAmount.ToString());
+                produceLevel.SetText("Level " + buildingController.level.ToString());
+                produceCost.SetText(buildingController.upgradeCost.ToString());
 
-            produceSpeedN.SetText((buildingController.productionTime + 1).ToString());
-            produceAmountN.SetText((buildingController.productionAmount + 1).ToString());
-            produceLevelN.SetText((buildingController.level + 1).ToString());
+                produceSpeedN.SetText((buildingController.productionTime + 1).ToString());
+                produceAmountN.SetText((buildingController.productionAmount + 1).ToString());
+                produceLevelN.SetText((buildingController.level + 1).ToString());
 
-            resourceManager.removeGold(buildingController.upgradeCost);
+                resourceManager.removeGold(buildingController.upgradeCost);
+            }
         }
         else
         {

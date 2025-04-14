@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         // Detect mouse click on objects
-        if (Input.GetMouseButtonDown(0))  // Left mouse button click
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())  // Left mouse button click
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;

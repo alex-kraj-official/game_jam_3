@@ -21,6 +21,7 @@ public class EnemyController : MonoBehaviour
 
     Animator animator;
     private GameObject gate;
+    public bool dontshoot = false;
 
     private void Start()
     {
@@ -35,6 +36,7 @@ public class EnemyController : MonoBehaviour
         {
             intact.SetActive(false);
             broke.SetActive(true);
+            dontshoot = true;
             Destroy(this.gameObject,1f);
         }
         else

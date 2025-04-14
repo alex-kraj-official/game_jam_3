@@ -18,6 +18,7 @@ public class TowerController : MonoBehaviour
     public float level;
 
     public float bulletDamage = 1f;
+    EnemyController controller;
 
     void Start()
     {
@@ -33,7 +34,6 @@ public class TowerController : MonoBehaviour
     void getTarget()
     {
         Collider[] hits = Physics.OverlapSphere(transform.position, attackRange, enemyLayer);
-
         // If we already have an enemy, check if it's still in range
         if (enemy != null)
         {
@@ -48,6 +48,7 @@ public class TowerController : MonoBehaviour
         if (enemy == null && hits.Length > 0)
         {
             enemy = hits[0].transform;
+            controller = hits[0].GetComponent<EnemyController>();
         }
 
     }
@@ -66,14 +67,16 @@ public class TowerController : MonoBehaviour
     }
     void shoot()
     {
-        GameObject newBullet = Instantiate(bullet, shootPoint.position, shootPoint.rotation);
-        ProjectileController e = newBullet.GetComponent<ProjectileController>();
-        e.target = enemy;
-        e.damage = bulletDamage;
-        Rigidbody bulletRb = newBullet.GetComponent<Rigidbody>();
-        if (bulletRb != null)
+        if (controller != null)
         {
-            //bulletRb.AddForce(shootPoint.forward*20f, ForceMode.Impulse);
+            if (controller.dontshoot == false)
+            {
+                GameObject newBullet = Instantiate(bullet, shootPoint.position, shootPoint.rotation);
+                ProjectileController e = newBullet.GetComponent<ProjectileController>();
+                e.target = enemy;
+                e.damage = bulletDamage;
+                Rigidbody bulletRb = newBullet.GetComponent<Rigidbody>();
+            }
         }
         nextTimeToFire = Time.time + 1f / attackRate;
     }

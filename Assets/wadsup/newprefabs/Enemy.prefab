@@ -3144,7 +3144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8faae68905546a64d99e3458f56d59ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 40
+  health: 5
   speed: 5
   damage: 5
   target: []

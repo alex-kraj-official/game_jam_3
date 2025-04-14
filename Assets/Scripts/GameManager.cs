@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
@@ -18,6 +19,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject WinrestartBtn;
     [SerializeField] private GameObject WinexitBtn;
 
+    [SerializeField] public GameObject NewDaySound;
+
     public GameObject gameOverPanel;
     public GameObject gameFinishedPanel;
 
@@ -25,6 +28,7 @@ public class GameManager : MonoBehaviour
 
     public EnemySpawner spawner;
     public ResourceManager manager;
+    public TowerPlacer towerPlacer;
 
 
     private void Update()
@@ -40,7 +44,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        InvokeRepeating(nameof(TriggerTaxEvent), taxInterval, taxInterval);
+        InvokeRepeating(nameof(TriggerTaxEvent), (taxInterval+taxInterval/2), taxInterval);
         InvokeRepeating(nameof(NewDay), dayLength, dayLength);
 
         UpdateLevelUI();
@@ -50,6 +54,7 @@ public class GameManager : MonoBehaviour
         if (!waitingForChoice)
         {
             Time.timeScale = 0f; // Pause game
+            towerPlacer.PanelsRemove();
             taxPanel.SetActive(true);
             waitingForChoice = true;
         }
@@ -58,6 +63,10 @@ public class GameManager : MonoBehaviour
     {
         day++;
         levelText.SetText(day.ToString());
+        if (day > 1)
+        {
+            NewDaySound.GetComponentInParent<AudioSource>().Play();
+        }
     }
     public void PayWithSheep()
     {
@@ -114,15 +123,19 @@ public class GameManager : MonoBehaviour
     void UpdateLevelUI()
     {
         if (levelText != null)
+        {
             levelText.text = currentLevel.ToString();
+        }
     }
     public void winGame()
     {
+        towerPlacer.PanelsRemove();
         Time.timeScale = 0f;
         gameFinishedPanel.SetActive(true);
     }
     public void loseGame()
     {
+        towerPlacer.PanelsRemove();
         Time.timeScale = 0f;
         gameOverPanel.SetActive(true);
     }

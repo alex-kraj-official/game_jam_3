@@ -204,6 +204,7 @@ public class SettingsMenu : MonoBehaviour
         MainVolumeMixer.SetFloat("GameEffectsVolume", GameEffectsVolume_Value);
         GameEffectsVolume_Value_Out = GameEffectsVolume_Value;
     }
+
     #endregion VoiceSettings
 
     #region GraphicsSettings

@@ -406,4 +406,13 @@ public class TowerPlacer : MonoBehaviour
             return;
         }
     }
+
+    public void PanelsRemove()
+    {
+        produceUpgradePanel.SetActive(false);
+        towerUpgradePanel.SetActive(false);
+        gateUpgradePanel.SetActive(false);
+        shopPanel.SetActive(false);
+        towerBuyerPanel.SetActive(false);
+    }
 }

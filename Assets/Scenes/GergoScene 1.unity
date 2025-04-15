@@ -17441,7 +17441,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &781018970
 RectTransform:
   m_ObjectHideFlags: 0
@@ -28901,7 +28901,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6044b16e0751c94fa9eb3a12091b8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  money: 300000
+  money: 5000
   sheep: 3000
   wood: 300
   people: 500

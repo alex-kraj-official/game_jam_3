@@ -34,14 +34,14 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
-        //if (SceneCounter.MainmenuLoaded == 1)
-        //{
-        //    DoNotDestroyAudioSource.instance.GetComponent<AudioSource>().Play();
-        //}
-        //if (SceneCounter.MainmenuLoaded > 1 && SceneCounter.FromLevelSelector == false)
-        //{
-        //    DoNotDestroyAudioSource.instance.GetComponent<AudioSource>().Play();
-        //}
+        if (SceneCounter.MainmenuLoaded == 1)
+        {
+            DoNotDestroyAudioSource.instance.GetComponent<AudioSource>().Play();
+        }
+        if (SceneCounter.MainmenuLoaded > 1 && SceneCounter.FromLevelSelector == false)
+        {
+            DoNotDestroyAudioSource.instance.GetComponent<AudioSource>().Play();
+        }
         if (SceneCounter.FromLevelSelector == false)
         {
             DoNotDestroyAudioSource.instance.GetComponent<AudioSource>().Play();
@@ -128,7 +128,6 @@ public class MainMenu : MonoBehaviour
     //Az elsõ pálya betöltése, a játék indítása.
     public void PlayGame()
     {
-        //SceneManager.SetActiveScene(SceneManagerOwn.scene2);
         SceneManager.LoadScene("GergoScene 1");
     }
 

@@ -193,6 +193,18 @@ public class TowerPlacer : MonoBehaviour
         }
     }
 
+    public void CloseShop()
+    {
+        shop.sheepAmount = 0;
+        shop.amountInputSheep.SetText(shop.sheepAmount.ToString());
+        shop.woodAmount = 0;
+        shop.amountInputWood.SetText(shop.woodAmount.ToString());
+        shop.wheatAmount = 0;
+        shop.amountInputWheat.SetText(shop.wheatAmount.ToString());
+        shop.oreAmount = 0;
+        shop.amountInputOre.SetText(shop.oreAmount.ToString());
+    }
+
     void TowerBuyerClicker()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

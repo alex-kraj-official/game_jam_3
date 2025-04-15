@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     public EnemySpawner spawner;
     public ResourceManager manager;
     public TowerPlacer towerPlacer;
+    public PauseMenu pauseMenu;
 
 
     private void Update()
@@ -44,16 +45,25 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
-        InvokeRepeating(nameof(TriggerTaxEvent), (taxInterval+taxInterval/2), taxInterval);
+        Time.timeScale = 0f;
+    }
+
+    public void StartGame()
+    {
+        Time.timeScale = 1f;
+
+        InvokeRepeating(nameof(TriggerTaxEvent), (taxInterval + taxInterval / 2), taxInterval);
         InvokeRepeating(nameof(NewDay), dayLength, dayLength);
 
         UpdateLevelUI();
     }
+
     void TriggerTaxEvent()
     {
         if (!waitingForChoice)
         {
             Time.timeScale = 0f; // Pause game
+            pauseMenu.Resume();
             towerPlacer.PanelsRemove();
             taxPanel.SetActive(true);
             waitingForChoice = true;
@@ -138,6 +148,15 @@ public class GameManager : MonoBehaviour
         towerPlacer.PanelsRemove();
         Time.timeScale = 0f;
         gameOverPanel.SetActive(true);
+    }
+    public void exitMainmenu()
+    {
+        gameFinishedPanel.SetActive(false);
+        gameOverPanel.SetActive(false);
+
+        SceneManager.LoadScene("Mainmenu");
+
+        Time.timeScale = 1f;
     }
     public void restartGame()
     {

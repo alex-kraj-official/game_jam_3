@@ -35,10 +35,7 @@ public class Shop : MonoBehaviour
 
     private void Start()
     {
-        amountInputSheep.SetText("0");
-        amountInputWood.SetText("0");
-        amountInputOre.SetText("0");
-        amountInputWheat.SetText("0");
+
     }
 
     public void increaseAmountSheep(float amount)
@@ -113,6 +110,9 @@ public class Shop : MonoBehaviour
             resourceManager.removeSheep(amount);
             resourceManager.getGold(amount*sheepSellPrice);
         }
+        amount = 0;
+        sheepAmount = 0;
+        amountInputSheep.SetText(amount.ToString());
     }
     public void buySheep(float amount)
     {
@@ -131,6 +131,9 @@ public class Shop : MonoBehaviour
             resourceManager.removeWood(amount);
             resourceManager.getGold(amount * woodSellPrice);
         }
+        amount = 0;
+        woodAmount = 0;
+        amountInputWood.SetText(amount.ToString());
     }
     public void buyWood(float amount)
     {
@@ -149,6 +152,9 @@ public class Shop : MonoBehaviour
             resourceManager.removeWheat(amount);
             resourceManager.getGold(amount * wheatSellPrice);
         }
+        amount = 0;
+        wheatAmount = 0;
+        amountInputWheat.SetText(amount.ToString());
     }
     public void buyWheat(float amount)
     {
@@ -167,6 +173,9 @@ public class Shop : MonoBehaviour
             resourceManager.removeOre(amount);
             resourceManager.getGold(amount * oreSellPrice);
         }
+        amount = 0;
+        oreAmount = 0;
+        amountInputOre.SetText(amount.ToString());
     }
     public void buyOre(float amount)
     {

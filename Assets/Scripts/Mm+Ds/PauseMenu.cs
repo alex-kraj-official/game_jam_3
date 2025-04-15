@@ -21,7 +21,7 @@ public class PauseMenu : MonoBehaviour
     private GameObject PauseMenu_Last_Panel_lvl1;
     private GameObject PauseMenu_Last_Panel_lvl2;
 
-    private int PauseMenu_level;
+    public int PauseMenu_level;
 
     private bool PauseMenu_BackButtonPressed;
 

@@ -37,21 +37,21 @@ public class LevelSelector : MonoBehaviour
         PlayerPrefs.DeleteAll();
         SceneManager.LoadScene("LevelSelector");
     }
-    //public void PlayLevel_1() //betölti az elsõ pályát
-    //{
-    //    MainmenuMusicPause();
-    //    SceneManager.LoadScene("Level_1");
-    //}
-    //public void PlayLevel_2()
-    //{
-    //    MainmenuMusicPause();
-    //    SceneManager.LoadScene("Level_2");
-    //}
-    //public void PlayLevel_3()
-    //{
-    //    MainmenuMusicPause();
-    //    SceneManager.LoadScene("Level_3");
-    //}
+    public void PlayLevel_1() //betölti az elsõ pályát
+    {
+        MainmenuMusicPause();
+        SceneManager.LoadScene("Level_1");
+    }
+    public void PlayLevel_2()
+    {
+        MainmenuMusicPause();
+        SceneManager.LoadScene("Level_2");
+    }
+    public void PlayLevel_3()
+    {
+        MainmenuMusicPause();
+        SceneManager.LoadScene("Level_3");
+    }
     public void LoadLevel(string name)
     {
         MainmenuMusicPause();

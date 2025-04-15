@@ -359,7 +359,7 @@ public class TowerPlacer : MonoBehaviour
     {
         if (resourceManager.money >= buildingController.upgradeCost)
         {
-            if (buildingController.productionTime > 0.1)
+            if (buildingController.productionTime > 0.2f)
             {
                 buildingController.productionTime = ((buildingController.productionTime - 0.1f)*10f)*0.1f;
                 buildingController.productionAmount++;
@@ -367,12 +367,16 @@ public class TowerPlacer : MonoBehaviour
                 buildingController.upgradeCost = buildingController.upgradeCost + 50;
 
                 produceName.SetText(currentProduce.name);
-                produceSpeed.SetText(buildingController.productionTime.ToString());
+                ///ez
+                produceSpeed.SetText((Mathf.Round((buildingController.productionTime ) * 10.0f) * 0.1f).ToString());
+
                 produceAmount.SetText(buildingController.productionAmount.ToString());
                 produceLevel.SetText("Level " + buildingController.level.ToString());
                 produceCost.SetText(buildingController.upgradeCost.ToString());
 
-                produceSpeedN.SetText((buildingController.productionTime + 1).ToString());
+
+
+                produceSpeedN.SetText((Mathf.Round((buildingController.productionTime - 0.1f) * 10.0f) * 0.1f).ToString());
                 produceAmountN.SetText((buildingController.productionAmount + 1).ToString());
                 produceLevelN.SetText((buildingController.level + 1).ToString());
 

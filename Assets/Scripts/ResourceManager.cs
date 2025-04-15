@@ -81,8 +81,12 @@ public class ResourceManager : MonoBehaviour
     }
     public void getPeople(float amount)
     {
-        people = people + amount;
-        updateText(peopleText, people);
+        if (people<maxPeople)
+        {
+            people = people + amount;
+            updateText(peopleText, people);
+        }
+        
     }
     public void removePeople(float amount)
     {

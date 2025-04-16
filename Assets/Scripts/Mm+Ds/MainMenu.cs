@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainMenu : MonoBehaviour
+public class Mainmenu : MonoBehaviour
 {
     [SerializeField] private GameObject MainMenu_Panel;
     [SerializeField] private GameObject MainMenu_Settings_Panel;
@@ -18,22 +18,38 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject EscYesBtn;
     [SerializeField] private GameObject EscNoBtn;
 
-    [SerializeField] private Slider Main_MainVolumeSlider;
-    [SerializeField] private Slider Main_GameMusicVolumeSlider;
-    [SerializeField] private Slider Main_GameEffectsVolumeSlider;
+    //[SerializeField] private Slider Main_MainVolumeSlider;
+    //[SerializeField] private Slider Main_GameMusicVolumeSlider;
+    //[SerializeField] private Slider Main_GameEffectsVolumeSlider;
 
     [SerializeField] private GameObject Last_Panel_lvl1;
     [SerializeField] private GameObject Last_Panel_lvl2;
 
-    private int MainMenu_level;
+    public AudioSource clickBtn_AudioSource;
 
-    private bool BackButtonPressed;
-    public static bool EscMainmenu = false;
+    private int MainMenu_level = 0;
+
+    private bool BackButtonPressed = false;
+    private bool EscMainmenu = false;
     private bool EscQuitPanelActive = false;
     private bool TransPanelActive = false;
 
     void Start()
     {
+        if (clickBtn_AudioSource == null)
+        {
+            Debug.LogError("clickBtn_AudioSource nincs beállítva!");
+            return;
+        }
+
+        //Minden Button megkeresése a gyerekek között
+        Button[] buttons = GetComponentsInChildren<Button>(true);
+        
+        foreach (Button button in buttons)
+        {
+            button.onClick.AddListener(() => clickBtn_AudioSource.Play());
+        }
+
         if (SceneCounter.MainmenuLoaded == 1)
         {
             DoNotDestroyAudioSource.instance.GetComponent<AudioSource>().Play();
@@ -47,31 +63,31 @@ public class MainMenu : MonoBehaviour
             DoNotDestroyAudioSource.instance.GetComponent<AudioSource>().Play();
         }
 
-        Main_MainVolumeSlider.value = SettingsMenu.MainVolume_Value_Out;
-        Main_GameMusicVolumeSlider.value = SettingsMenu.GameMusicVolume_Value_Out;
-        Main_GameEffectsVolumeSlider.value = SettingsMenu.GameEffectsVolume_Value_Out;
-        QualitySettings.SetQualityLevel(SettingsMenu.qualityIndex_Out);
+        //Main_MainVolumeSlider.value = SettingsMenu.MainVolume_Value_Out;
+        //Main_GameMusicVolumeSlider.value = SettingsMenu.GameMusicVolume_Value_Out;
+        //Main_GameEffectsVolumeSlider.value = SettingsMenu.GameEffectsVolume_Value_Out;
+        //QualitySettings.SetQualityLevel(SettingsMenu.qualityIndex_Out);
 
         //MouseCursorManager.CursorConfined_Visible();
-        MainMenu_level = 0;
-        BackButtonPressed = false;
+        Time.timeScale = 1f;
         Last_Panel_lvl1 = MainMenu_Settings_Panel;
         Last_Panel_lvl2 = MainMenu_GameSettings_Panel;
+        LoadCurrentPanel();
     }
 
     private void Update()
     {
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            if (EscMainmenu)
-            {
-                MouseCursorManager.CursorConfined_Visible();
-            }
-            else
-            {
-                MouseCursorManager.CursorNone_Visible();
-            }
-        }
+        //if (Input.GetKey(KeyCode.Escape))
+        //{
+        //    if (EscMainmenu)
+        //    {
+        //        MouseCursorManager.CursorConfined_Visible();
+        //    }
+        //    else
+        //    {
+        //        MouseCursorManager.CursorNone_Visible();
+        //    }
+        //}
         CheckInput();
     }
 
@@ -122,13 +138,15 @@ public class MainMenu : MonoBehaviour
         {
             EscQuitPanel();
         }
+        clickBtn_AudioSource.Play();
         BackButtonPressed = false;
     }
 
     //Az elsõ pálya betöltése, a játék indítása.
     public void PlayGame()
     {
-        SceneManager.LoadScene("GergoScene 1");
+        SceneManager.LoadScene("AlexScene", LoadSceneMode.Single);
+        //SceneManager.LoadScene("Game");
     }
 
     public void GeneralSettingsPanel()
@@ -199,11 +217,5 @@ public class MainMenu : MonoBehaviour
         EscQuitPanelActive = false;
         Trans_Panel.SetActive(false);
         TransPanelActive = false;
-    }
-
-    public void PlayKinect()
-    {
-        LevelSelector.MainmenuMusicPause();
-        SceneManager.LoadScene("KinectDemo");
     }
 }

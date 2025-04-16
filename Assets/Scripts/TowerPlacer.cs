@@ -145,10 +145,10 @@ public class TowerPlacer : MonoBehaviour
         {
             buildingController = hit.transform.GetComponent<BuildingController>();
             currentProduce = hit.transform;
-            Debug.Log(hit.transform.tag);
+            //Debug.Log(hit.transform.tag);
             if (buildingController != null)
             {
-                Debug.Log("asdasd");
+                //Debug.Log("asdasd");
                 towerUpgradePanel.SetActive(false);
                 produceUpgradePanel.SetActive(true);
                 gateUpgradePanel.SetActive(false);
@@ -177,10 +177,10 @@ public class TowerPlacer : MonoBehaviour
         {
             shop = hit.transform.GetComponent<Shop>();
             currentShop = hit.transform;
-            Debug.Log(hit.transform.tag);
+            //Debug.Log(hit.transform.tag);
             if (shop != null)
             {
-                Debug.Log("asdasd");
+                //Debug.Log("asdasd");
                 towerUpgradePanel.SetActive(false);
                 produceUpgradePanel.SetActive(false);
                 gateUpgradePanel.SetActive(false);
@@ -214,7 +214,7 @@ public class TowerPlacer : MonoBehaviour
             currentTowerBuyer = hit.transform;
             if (towerBuyer != null)
             {
-                Debug.Log("lolol");
+                //Debug.Log("lolol");
                 towerBuyerPanel.SetActive(true);
                // towerUpgradePanel.SetActive(false);
                // produceUpgradePanel.SetActive(false);
@@ -236,7 +236,7 @@ public class TowerPlacer : MonoBehaviour
         {
             towerController = hit.transform.root.GetComponent<TowerController>();
             currentTower = hit.transform;
-            Debug.Log(hit.transform.tag);
+            //Debug.Log(hit.transform.tag);
             if (towerController != null)
             {
                 towerUpgradePanel.SetActive(true);
@@ -266,7 +266,7 @@ public class TowerPlacer : MonoBehaviour
         {
             gateController = hit.transform.root.GetComponent<GateController>();
             currentGate = hit.transform;
-            Debug.Log(hit.transform.tag);
+            //Debug.Log(hit.transform.tag);
             if (gateController != null)
             {
                 gateUpgradePanel.SetActive(true);

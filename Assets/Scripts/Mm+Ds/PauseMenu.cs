@@ -23,15 +23,34 @@ public class PauseMenu : MonoBehaviour
 
     public int PauseMenu_level;
 
+    public AudioSource clickBtn_AudioSource;
+
     private bool PauseMenu_BackButtonPressed;
 
     private void Start()
     {
+        if (clickBtn_AudioSource == null)
+        {
+            Debug.LogError("clickBtn_AudioSource nincs beállítva!");
+            return;
+        }
+
+        // Minden Button megkeresése a gyerekek között
+        Button[] buttons = GetComponentsInChildren<Button>(true);
+
+        foreach (Button button in buttons)
+        {
+            button.onClick.AddListener(() => clickBtn_AudioSource.Play());
+        }
+
         QualitySettings.SetQualityLevel(SettingsMenu.qualityIndex_Out);
         Pause_MainVolumeSlider.value = SettingsMenu.MainVolume_Value_Out;
         Pause_GameMusicVolumeSlider.value = SettingsMenu.GameMusicVolume_Value_Out;
         Pause_GameEffectsVolumeSlider.value = SettingsMenu.GameEffectsVolume_Value_Out;
-        Resume();
+
+        PauseMenu_Panel.SetActive(false);
+        Time.timeScale = 1f;
+        GameIsPaused = false;
     }
 
     // Update is called once per frame
@@ -54,7 +73,7 @@ public class PauseMenu : MonoBehaviour
         //Ha a megnyomott gomb az Escape, akkor megnézzük, hogy a game éppen megvan-e állítva, ha igen akkor Unpause-oljuk, ellenkezõ esetben meg megállítjuk.
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if ((PauseMenu_level == 1 || PauseMenu_level == 2) && GameIsPaused)
+            if ((PauseMenu_level != 0) && GameIsPaused)
             {
                 PauseMenu_BackButtonPressed = true;
             }
@@ -101,7 +120,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Back() //egy szinttel visszalép
     {
-        Debug.Log("Back");
+        clickBtn_AudioSource.Play();
         PauseMenu_level -= 1;
         PauseMenu_BackButtonPressed = false;
     }
@@ -109,6 +128,7 @@ public class PauseMenu : MonoBehaviour
     public void Resume() //kilép a menübõl, lockolja a kurzort, és folytatódik a játék
     {
         PauseMenu_Panel.SetActive(false);
+        clickBtn_AudioSource.Play();
         Time.timeScale = 1f;
         GameIsPaused = false;
         //MouseCursorManager.CursorConfined_NotVisible();
@@ -118,6 +138,7 @@ public class PauseMenu : MonoBehaviour
     void Pause()
     {
         PauseMenu_Panel.SetActive(true);
+        clickBtn_AudioSource.Play();
         Time.timeScale = 0f;
         GameIsPaused = true;
         //MouseCursorManager.CursorConfined_Visible();
@@ -125,14 +146,12 @@ public class PauseMenu : MonoBehaviour
 
     public void GeneralSettingsPanel() //itt kerülnek definiálásra a menü paneljeinek elérési útvonalai, adatai
     {
-        Debug.Log("Settings");
         PauseMenu_level = 1;
         PauseMenu_Last_Panel_lvl1 = PauseMenu_Settings_Panel;
     }
 
     public void GameSettingsPanel() //itt kerülnek definiálásra a menü paneljeinek elérési útvonalai, adatai
     {
-        Debug.Log("GameSettings");
         PauseMenu_level = 2;
         PauseMenu_Last_Panel_lvl1 = PauseMenu_Settings_Panel;
         PauseMenu_Last_Panel_lvl2 = PauseMenu_GameSettings_Panel;
@@ -164,7 +183,7 @@ public class PauseMenu : MonoBehaviour
     public void LoadMenu()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("Mainmenu");
+        SceneManager.LoadScene("Mainmenu", LoadSceneMode.Single);
     }
     //A játék bezárása.
     public void QuitGame()

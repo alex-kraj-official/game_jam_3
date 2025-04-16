@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] public GameObject NewDaySound;
 
+    public GameObject WelcomePanel;
     public GameObject gameOverPanel;
     public GameObject gameFinishedPanel;
 
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+        WelcomePanel.SetActive(true);
         Time.timeScale = 0f;
     }
 
@@ -71,11 +73,14 @@ public class GameManager : MonoBehaviour
     }
     void NewDay()
     {
-        day++;
-        levelText.SetText(day.ToString());
-        if (day > 1)
+        if (!waitingForChoice)
         {
-            NewDaySound.GetComponentInParent<AudioSource>().Play();
+            day++;
+            levelText.SetText(day.ToString());
+            if (day > 1)
+            {
+                NewDaySound.GetComponentInParent<AudioSource>().Play();
+            }
         }
     }
     public void PayWithSheep()

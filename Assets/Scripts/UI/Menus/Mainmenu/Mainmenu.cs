@@ -18,10 +18,6 @@ public class Mainmenu : MonoBehaviour
     [SerializeField] private GameObject EscYesBtn;
     [SerializeField] private GameObject EscNoBtn;
 
-    //[SerializeField] private Slider Main_MainVolumeSlider;
-    //[SerializeField] private Slider Main_GameMusicVolumeSlider;
-    //[SerializeField] private Slider Main_GameEffectsVolumeSlider;
-
     [SerializeField] private GameObject Last_Panel_lvl1;
     [SerializeField] private GameObject Last_Panel_lvl2;
 
@@ -50,23 +46,18 @@ public class Mainmenu : MonoBehaviour
             button.onClick.AddListener(() => clickBtn_AudioSource.Play());
         }
 
-        if (SceneCounter.MainmenuLoaded == 1)
-        {
-            DoNotDestroyAudioSource.instance.GetComponent<AudioSource>().Play();
-        }
-        if (SceneCounter.MainmenuLoaded > 1 && SceneCounter.FromLevelSelector == false)
-        {
-            DoNotDestroyAudioSource.instance.GetComponent<AudioSource>().Play();
-        }
-        if (SceneCounter.FromLevelSelector == false)
-        {
-            DoNotDestroyAudioSource.instance.GetComponent<AudioSource>().Play();
-        }
-
-        //Main_MainVolumeSlider.value = SettingsMenu.MainVolume_Value_Out;
-        //Main_GameMusicVolumeSlider.value = SettingsMenu.GameMusicVolume_Value_Out;
-        //Main_GameEffectsVolumeSlider.value = SettingsMenu.GameEffectsVolume_Value_Out;
-        //QualitySettings.SetQualityLevel(SettingsMenu.qualityIndex_Out);
+        //if (SceneCounter.MainmenuLoaded == 1)
+        //{
+        //    DoNotDestroyAudioSource.instance.GetComponent<AudioSource>().Play();
+        //}
+        //if (SceneCounter.MainmenuLoaded > 1 && SceneCounter.FromLevelSelector == false)
+        //{
+        //    DoNotDestroyAudioSource.instance.GetComponent<AudioSource>().Play();
+        //}
+        //if (SceneCounter.FromLevelSelector == false)
+        //{
+        //    DoNotDestroyAudioSource.instance.GetComponent<AudioSource>().Play();
+        //}
 
         //MouseCursorManager.CursorConfined_Visible();
         Time.timeScale = 1f;
@@ -182,7 +173,6 @@ public class Mainmenu : MonoBehaviour
         Last_Panel_lvl1 = MainMenu_Info_Panel;
     }
 
-    //A játék bezárása.
     public void QuitGame()
     {
         Application.Quit();

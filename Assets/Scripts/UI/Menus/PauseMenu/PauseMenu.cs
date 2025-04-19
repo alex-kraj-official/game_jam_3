@@ -4,188 +4,240 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PauseMenu : MonoBehaviour
+public class Pausemenu : MonoBehaviour
 {
-    //Változó, ami figyeli, hogy a játék meg van-e állítva.
-    public bool GameIsPaused = false;
+    [Header("PANELS")]
+    [SerializeField] private GameObject Pausemenu_Panel;
+    [SerializeField] private GameObject Pause_Settings_Panel;
+    [SerializeField] private GameObject Pause_GameSettings_Panel;
+    [SerializeField] private GameObject Pause_GraphicsSettings_Panel;
+    [SerializeField] private GameObject Pause_SoundSettings_Panel;
+    [SerializeField] private GameObject Trans_Panel;
+    [SerializeField] private GameObject EscMm_Panel;
+    [SerializeField] private GameObject EscQuit_Panel;
+    [SerializeField] private GameObject Pause_Last_Panel_lvl1;
+    [SerializeField] private GameObject Pause_Last_Panel_lvl2;
 
-    [SerializeField] private GameObject PauseMenu_Panel;
-    [SerializeField] private GameObject PauseMenu_Settings_Panel;
-    [SerializeField] private GameObject PauseMenu_GameSettings_Panel;
-    [SerializeField] private GameObject PauseMenu_GraphicsSettings_Panel;
-    [SerializeField] private GameObject PauseMenu_SoundSettings_Panel;
-    [SerializeField] private Slider Pause_MainVolumeSlider;
-    [SerializeField] private Slider Pause_GameMusicVolumeSlider;
-    [SerializeField] private Slider Pause_GameEffectsVolumeSlider;
-
-    private GameObject PauseMenu_Last_Panel_lvl1;
-    private GameObject PauseMenu_Last_Panel_lvl2;
-
-    public int PauseMenu_level;
-
+    [Header("AUDIO")]
     public AudioSource clickBtn_AudioSource;
 
-    private bool PauseMenu_BackButtonPressed;
+    [SerializeField] private GameManager gameManager;
+
+    public bool GameIsPaused = false; //Stores if the game is paused
+    private int Pausemenu_level = -1;
+    private bool Pausemenu_BackButtonPressed = false; //Stores if the user pressed Esc or a Back button
+    private bool EscPausemenu = false;
+    private bool EscMmPanelActive = false;
+    private bool EscQuitPanelActive = false;
 
     private void Start()
     {
+        //AudioSource Exception Handling
         if (clickBtn_AudioSource == null)
         {
-            Debug.LogError("clickBtn_AudioSource nincs beállítva!");
+            Debug.LogError("\"clickBtn_AudioSource\" is not set!");
             return;
         }
 
-        // Minden Button megkeresése a gyerekek között
+        //Searching every buttons amongst children
         Button[] buttons = GetComponentsInChildren<Button>(true);
-
+        //Adding an event listener to every children buttons of this (MainmenuCanvas) gameObject which is to play the click sound
         foreach (Button button in buttons)
         {
             button.onClick.AddListener(() => clickBtn_AudioSource.Play());
         }
 
         QualitySettings.SetQualityLevel(SettingsMenu.qualityIndex_Out);
-        Pause_MainVolumeSlider.value = SettingsMenu.MainVolume_Value_Out;
-        Pause_GameMusicVolumeSlider.value = SettingsMenu.GameMusicVolume_Value_Out;
-        Pause_GameEffectsVolumeSlider.value = SettingsMenu.GameEffectsVolume_Value_Out;
 
-        PauseMenu_Panel.SetActive(false);
-        Time.timeScale = 1f;
-        GameIsPaused = false;
+        //Initializing
+        Pausemenu_Panel.SetActive(false);
+        Pause_Last_Panel_lvl1 = Pause_Settings_Panel;
+        Pause_Last_Panel_lvl2 = Pause_GameSettings_Panel;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        CheckInput();
+        CheckInput(); //Detecting if the user presses Esc Button
+
         if (GameIsPaused)
         {
-            if (PauseMenu_BackButtonPressed) Back();
-            LoadCurrentPanel();
+            if (!EscMmPanelActive && !EscQuitPanelActive)
+            {
+                if (Pausemenu_BackButtonPressed) Back();
+                LoadCurrentPanel(); //Displaying the correct panels
+            }
+            if (EscMmPanelActive)
+            {
+                EscMm_Panel.SetActive(false);
+                Trans_Panel.SetActive(false);
+            }
+            if (EscQuitPanelActive)
+            {
+                EscQuit_Panel.SetActive(false);
+                Trans_Panel.SetActive(false);
+            }
         }
     }
 
-    /// <summary>
-    /// A pausemenu objektum eltüntetése, az idõ múlásának visszaállítása és a gameispaused változó értéke false-ra változik.
-    /// </summary>
-
+    //Detecting if the user presses Esc Button
     private void CheckInput()
     {
-        //Ha a megnyomott gomb az Escape, akkor megnézzük, hogy a game éppen megvan-e állítva, ha igen akkor Unpause-oljuk, ellenkezõ esetben meg megállítjuk.
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if ((PauseMenu_level != 0) && GameIsPaused)
+            if (GameIsPaused)
             {
-                PauseMenu_BackButtonPressed = true;
-            }
+                if (Pausemenu_level == 0 && !EscMmPanelActive && !EscQuitPanelActive)
+                {
+                    Resume();
+                }
 
-            if (GameIsPaused && PauseMenu_level == 0)
-            {
-                PauseMenu_level = -1;
-                Resume();
+                else
+                {
+                    Pausemenu_BackButtonPressed = true;
+                }
             }
             else
             {
-                if (!GameIsPaused) //beállítja a paneleket
-                {
-                    PauseMenu_level = 0;
-                    PauseMenu_Last_Panel_lvl1 = PauseMenu_Settings_Panel;
-                    PauseMenu_Last_Panel_lvl2 = PauseMenu_GameSettings_Panel;
-                    Pause(); //meghívja a Pause metódust
-                }
+                Pausemenu_level = 0;
+                Pause_Last_Panel_lvl1 = Pause_Settings_Panel;
+                Pause_Last_Panel_lvl2 = Pause_GameSettings_Panel;
+                Pause();
+                LoadCurrentPanel(); //Displaying the correct panels
             }
         }
     }
 
-    public void LoadCurrentPanel() //megnézi, hogy melyik fülön vagyunk, és aktiválja a megfelelõ paneleket
+    //Displaying the correct panels
+    public void LoadCurrentPanel()
     {
-        if (PauseMenu_level == 0)
-        {
-            PauseMenu_Panel.SetActive(true);
-            PauseMenu_Last_Panel_lvl1.SetActive(false);
-            PauseMenu_Last_Panel_lvl2.SetActive(false);
-        }
-        if (PauseMenu_level == 1)
-        {
-            PauseMenu_Panel.SetActive(false);
-            PauseMenu_Last_Panel_lvl1.SetActive(true);
-            PauseMenu_Last_Panel_lvl2.SetActive(false);
-        }
-        if (PauseMenu_level == 2)
-        {
-            PauseMenu_Panel.SetActive(false);
-            PauseMenu_Last_Panel_lvl1.SetActive(false);
-            PauseMenu_Last_Panel_lvl2.SetActive(true);
-        }
+        Pausemenu_Panel.SetActive(Pausemenu_level == 0);
+        Pause_Last_Panel_lvl1.SetActive(Pausemenu_level == 1);
+        Pause_Last_Panel_lvl2.SetActive(Pausemenu_level == 2);
     }
 
-    public void Back() //egy szinttel visszalép
+    //Stepping back in the pausemenu with Esc or with a Back button
+    public void Back()
     {
+        if (Pausemenu_level > 0)
+        {
+            Pausemenu_level -= 1;
+        }
+        Pausemenu_BackButtonPressed = false;
         clickBtn_AudioSource.Play();
-        PauseMenu_level -= 1;
-        PauseMenu_BackButtonPressed = false;
     }
 
-    public void Resume() //kilép a menübõl, lockolja a kurzort, és folytatódik a játék
+    //Unpausing the game
+    public void Resume()
     {
-        PauseMenu_Panel.SetActive(false);
+        Pausemenu_level = -1;
+        Pausemenu_Panel.SetActive(false);
         clickBtn_AudioSource.Play();
-        Time.timeScale = 1f;
+        if (!gameManager.waitingForChoice && !gameManager.waitingForStart) Time.timeScale = 1f;
         GameIsPaused = false;
-        //MouseCursorManager.CursorConfined_NotVisible();
     }
 
-    // A PauseMenu aktívra állítása, az idõmúlás megállítása és a gameispaused változó true értékre állítása.
+    //Pausing the game
     void Pause()
     {
-        PauseMenu_Panel.SetActive(true);
+        Pausemenu_level = 0;
         clickBtn_AudioSource.Play();
         Time.timeScale = 0f;
         GameIsPaused = true;
-        //MouseCursorManager.CursorConfined_Visible();
     }
 
-    public void GeneralSettingsPanel() //itt kerülnek definiálásra a menü paneljeinek elérési útvonalai, adatai
+    private void OpenMenu(int level, GameObject panel1, GameObject panel2 = null)
     {
-        PauseMenu_level = 1;
-        PauseMenu_Last_Panel_lvl1 = PauseMenu_Settings_Panel;
+        Pausemenu_level = level;
+
+        if (level == 1)
+        {
+            Pause_Last_Panel_lvl1 = panel1;
+        }
+        else if (level == 2)
+        {
+            Pause_Last_Panel_lvl1 = panel1;
+            Pause_Last_Panel_lvl2 = panel2;
+        }
     }
 
-    public void GameSettingsPanel() //itt kerülnek definiálásra a menü paneljeinek elérési útvonalai, adatai
-    {
-        PauseMenu_level = 2;
-        PauseMenu_Last_Panel_lvl1 = PauseMenu_Settings_Panel;
-        PauseMenu_Last_Panel_lvl2 = PauseMenu_GameSettings_Panel;
-    }
-    public void GraphicsSettingsPanel() //itt kerülnek definiálásra a menü paneljeinek elérési útvonalai, adatai
-    {
-        PauseMenu_level = 2;
-        PauseMenu_Last_Panel_lvl1 = PauseMenu_Settings_Panel;
-        PauseMenu_Last_Panel_lvl2 = PauseMenu_GraphicsSettings_Panel;
-    }
-    public void SoundSettingsPanel() //itt kerülnek definiálásra a menü paneljeinek elérési útvonalai, adatai
-    {
-        PauseMenu_level = 2;
-        PauseMenu_Last_Panel_lvl1 = PauseMenu_Settings_Panel;
-        PauseMenu_Last_Panel_lvl2 = PauseMenu_SoundSettings_Panel;
-    }
+    public void Settings() => OpenMenu(1, Pause_Settings_Panel);
+    public void GameSettings() => OpenMenu(2, Pause_Settings_Panel, Pause_GameSettings_Panel);
+    public void GraphicsSettings() => OpenMenu(2, Pause_Settings_Panel, Pause_GraphicsSettings_Panel);
+    public void SoundSettings() => OpenMenu(2, Pause_Settings_Panel, Pause_SoundSettings_Panel);
 
-    public void RestartCheckPoint()
-    {
-        Resume();
-    }
+    //public void RestartCheckPoint()
+    //{
+    //    Resume();
+    //}
 
-    public void RestartLevel() //újraindítja a pályát
+    //Restarting the current level (reloading scene)
+    public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    //Az idõmúlás elindítása és a fõmenü betöltése.
+    //"Are u sure u want to return?" Panel
+    public void EscMmPanel()
+    {
+        if (Pausemenu_level == 0 && !EscMmPanelActive)
+        {
+            EscMm_Panel.SetActive(true);
+            EscMmPanelActive = true;
+            Trans_Panel.SetActive(true);
+        }
+        else
+        {
+            EscMm_Panel.SetActive(false);
+            EscMmPanelActive = false;
+            Trans_Panel.SetActive(false);
+        }
+    }
+
+    //"Are u sure u want to quit?" Panel
+    public void EscQuitPanel()
+    {
+        if (Pausemenu_level == 0 && !EscQuitPanelActive)
+        {
+            EscQuit_Panel.SetActive(true);
+            EscQuitPanelActive = true;
+            Trans_Panel.SetActive(true);
+        }
+        else
+        {
+            EscQuit_Panel.SetActive(false);
+            EscQuitPanelActive = false;
+            Trans_Panel.SetActive(false);
+        }
+    }
+
+    //Are u sure u want to quit?->No
+    public void EscNo()
+    {
+        EscMm_Panel.SetActive(false);
+        EscQuit_Panel.SetActive(false);
+        EscMmPanelActive = false;
+        EscQuitPanelActive = false;
+        Trans_Panel.SetActive(false);
+    }
+
+    public void ReturnToMmBtn()
+    {
+        EscMmPanel();
+    }
+
+    //Returning to the mainmenu
     public void LoadMenu()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("Mainmenu", LoadSceneMode.Single);
     }
-    //A játék bezárása.
+
+    public void QuitBtn()
+    {
+        EscQuitPanel();
+    }
+
+    //Close the whole game
     public void QuitGame()
     {
         Application.Quit();

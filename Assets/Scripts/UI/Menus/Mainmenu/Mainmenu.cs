@@ -6,41 +6,42 @@ using UnityEngine.UI;
 
 public class Mainmenu : MonoBehaviour
 {
-    [SerializeField] private GameObject MainMenu_Panel;
-    [SerializeField] private GameObject MainMenu_Settings_Panel;
-    [SerializeField] private GameObject MainMenu_GameSettings_Panel;
-    [SerializeField] private GameObject MainMenu_GraphicsSettings_Panel;
-    [SerializeField] private GameObject MainMenu_SoundSettings_Panel;
-    [SerializeField] private GameObject EscQuit_Panel;
+    [Header("PANELS")]
+    [SerializeField] private GameObject Mainmenu_Panel;
+    [SerializeField] private GameObject Main_Settings_Panel;
+    [SerializeField] private GameObject Main_GameSettings_Panel;
+    [SerializeField] private GameObject Main_GraphicsSettings_Panel;
+    [SerializeField] private GameObject Main_SoundSettings_Panel;
+    [SerializeField] private GameObject Main_Info_Panel;
     [SerializeField] private GameObject Trans_Panel;
-    [SerializeField] private GameObject MainMenu_Info_Panel;
+    [SerializeField] private GameObject EscQuit_Panel;
+    [SerializeField] private GameObject Main_Last_Panel_lvl1;
+    [SerializeField] private GameObject Main_Last_Panel_lvl2;
 
+    [Header("BUTTONS")]
     [SerializeField] private GameObject EscYesBtn;
     [SerializeField] private GameObject EscNoBtn;
 
-    [SerializeField] private GameObject Last_Panel_lvl1;
-    [SerializeField] private GameObject Last_Panel_lvl2;
-
-    public AudioSource clickBtn_AudioSource;
+    [Header("AUDIO")]
+    [SerializeField] public AudioSource clickBtn_AudioSource;
 
     private int MainMenu_level = 0;
-
     private bool BackButtonPressed = false;
     private bool EscMainmenu = false;
     private bool EscQuitPanelActive = false;
-    private bool TransPanelActive = false;
 
     void Start()
     {
+        //AudioSource Exception Handling
         if (clickBtn_AudioSource == null)
         {
-            Debug.LogError("clickBtn_AudioSource nincs beállítva!");
+            Debug.LogError("\"clickBtn_AudioSource\" is not set!");
             return;
         }
 
-        //Minden Button megkeresése a gyerekek között
+        //Searching every buttons amongst children
         Button[] buttons = GetComponentsInChildren<Button>(true);
-        
+        //Adding an event listener to every children buttons of this (MainmenuCanvas) gameObject which is to play the click sound
         foreach (Button button in buttons)
         {
             button.onClick.AddListener(() => clickBtn_AudioSource.Play());
@@ -59,125 +60,72 @@ public class Mainmenu : MonoBehaviour
         //    DoNotDestroyAudioSource.instance.GetComponent<AudioSource>().Play();
         //}
 
-        //MouseCursorManager.CursorConfined_Visible();
+        //Initializing
         Time.timeScale = 1f;
-        Last_Panel_lvl1 = MainMenu_Settings_Panel;
-        Last_Panel_lvl2 = MainMenu_GameSettings_Panel;
-        LoadCurrentPanel();
+        Main_Last_Panel_lvl1 = Main_Settings_Panel;
+        Main_Last_Panel_lvl2 = Main_GameSettings_Panel;
     }
 
     private void Update()
     {
-        //if (Input.GetKey(KeyCode.Escape))
-        //{
-        //    if (EscMainmenu)
-        //    {
-        //        MouseCursorManager.CursorConfined_Visible();
-        //    }
-        //    else
-        //    {
-        //        MouseCursorManager.CursorNone_Visible();
-        //    }
-        //}
-        CheckInput();
+        if (Input.GetKeyDown(KeyCode.Escape)) BackButtonPressed = true; //In case the user presses Esc store this info
+        if (BackButtonPressed) Back(); //If the user pressed Esc then run Back() method
+
+        LoadCurrentPanel(); //Displaying the correct panels
     }
 
-    private void FixedUpdate()
-    {
-        if (BackButtonPressed) Back();
-        LoadCurrentPanel();
-    }
-
-    private void CheckInput()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            BackButtonPressed = true;
-            Back();
-        }
-    }
-
+    //Displaying the correct panels
     public void LoadCurrentPanel()
-    {        
-        if (MainMenu_level == 0)
-        {
-            MainMenu_Panel.SetActive(true);
-            Last_Panel_lvl1.SetActive(false);
-            Last_Panel_lvl2.SetActive(false);
-        }
-        if (MainMenu_level == 1)
-        {
-            MainMenu_Panel.SetActive(false);
-            Last_Panel_lvl1.SetActive(true);
-            Last_Panel_lvl2.SetActive(false);
-        }
-        if (MainMenu_level == 2)
-        {
-            MainMenu_Panel.SetActive(false);
-            Last_Panel_lvl1.SetActive(false);
-            Last_Panel_lvl2.SetActive(true);
-        }
+    {
+        Mainmenu_Panel.SetActive(MainMenu_level == 0);
+        Main_Last_Panel_lvl1.SetActive(MainMenu_level == 1);
+        Main_Last_Panel_lvl2.SetActive(MainMenu_level == 2);
     }
 
+    //Stepping back in the mainmenu with Esc or with a Back button
     public void Back()
     {
         if (MainMenu_level > 0)
         {
-            MainMenu_level -= 1;
+            MainMenu_level -= 1; //Stepping back in the mainmenu
         }
         else
         {
-            EscQuitPanel();
+            EscQuitPanel(); // Show quit panel when back at level 0
         }
-        clickBtn_AudioSource.Play();
-        BackButtonPressed = false;
+        clickBtn_AudioSource.Play(); //Playing the click sound
+        BackButtonPressed = false; // Reset flag after action
     }
 
-    //Az elsõ pálya betöltése, a játék indítása.
-    public void PlayGame()
+    //Loading and starting the actual game
+    public void Play()
     {
-        SceneManager.LoadScene("AlexScene", LoadSceneMode.Single);
-        //SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("AlexScene", LoadSceneMode.Single); //Test game scene
+        //SceneManager.LoadScene("Game"); //Real game scene
     }
 
-    public void GeneralSettingsPanel()
+    private void OpenMenu(int level, GameObject panel1, GameObject panel2 = null)
     {
-        MainMenu_level = 1;
-        Last_Panel_lvl1 = MainMenu_Settings_Panel;
+        MainMenu_level = level;
+
+        if (level == 1)
+        {
+            Main_Last_Panel_lvl1 = panel1;
+        }
+        else if (level == 2)
+        {
+            Main_Last_Panel_lvl1 = panel1;
+            Main_Last_Panel_lvl2 = panel2;
+        }
     }
 
-    public void GameSettingsPanel()
-    {
-        MainMenu_level = 2;
-        Last_Panel_lvl1 = MainMenu_Settings_Panel;
-        Last_Panel_lvl2 = MainMenu_GameSettings_Panel;
-    }
+    public void Settings() => OpenMenu(1, Main_Settings_Panel);
+    public void GameSettings() => OpenMenu(2, Main_Settings_Panel, Main_GameSettings_Panel);
+    public void GraphicsSettings() => OpenMenu(2, Main_Settings_Panel, Main_GraphicsSettings_Panel);
+    public void SoundSettings() => OpenMenu(2, Main_Settings_Panel, Main_SoundSettings_Panel);
+    public void Info() => OpenMenu(1, Main_Info_Panel);
 
-    public void GraphicsSettingsPanel()
-    {
-        MainMenu_level = 2;
-        Last_Panel_lvl1 = MainMenu_Settings_Panel;
-        Last_Panel_lvl2 = MainMenu_GraphicsSettings_Panel;
-    }
-
-    public void SoundSettingsPanel()
-    {
-        MainMenu_level = 2;
-        Last_Panel_lvl1 = MainMenu_Settings_Panel;
-        Last_Panel_lvl2 = MainMenu_SoundSettings_Panel;
-    }
-
-    public void InfoPanel()
-    {
-        MainMenu_level = 1;
-        Last_Panel_lvl1 = MainMenu_Info_Panel;
-    }
-
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
-
+    //"Are u sure u want to quit?" Panel
     public void EscQuitPanel()
     {
         if (MainMenu_level == 0 && !EscQuitPanelActive)
@@ -185,27 +133,26 @@ public class Mainmenu : MonoBehaviour
             EscQuit_Panel.SetActive(true);
             EscQuitPanelActive = true;
             Trans_Panel.SetActive(true);
-            TransPanelActive = true;
         }
         else
         {
             EscQuit_Panel.SetActive(false);
             EscQuitPanelActive = false;
             Trans_Panel.SetActive(false);
-            TransPanelActive = false;
         }
     }
 
-    public void EscYes()
-    {
-        Application.Quit();
-    }
-
+    //Are u sure u want to quit?->No
     public void EscNo()
     {
         EscQuit_Panel.SetActive(false);
         EscQuitPanelActive = false;
         Trans_Panel.SetActive(false);
-        TransPanelActive = false;
+    }
+
+    //Close the whole game
+    public void Quit()
+    {
+        Application.Quit();
     }
 }

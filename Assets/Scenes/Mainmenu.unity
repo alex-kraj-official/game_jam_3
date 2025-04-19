@@ -2594,7 +2594,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2002256451}
         m_TargetAssemblyTypeName: Mainmenu, Assembly-CSharp
-        m_MethodName: InfoPanel
+        m_MethodName: Info
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4474,7 +4474,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2002256451}
         m_TargetAssemblyTypeName: Mainmenu, Assembly-CSharp
-        m_MethodName: QuitGame
+        m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5507,7 +5507,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2002256451}
         m_TargetAssemblyTypeName: Mainmenu, Assembly-CSharp
-        m_MethodName: GeneralSettingsPanel
+        m_MethodName: Settings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7338,7 +7338,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2002256451}
         m_TargetAssemblyTypeName: Mainmenu, Assembly-CSharp
-        m_MethodName: GameSettingsPanel
+        m_MethodName: GameSettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7605,7 +7605,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2002256451}
         m_TargetAssemblyTypeName: Mainmenu, Assembly-CSharp
-        m_MethodName: PlayGame
+        m_MethodName: Play
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11475,7 +11475,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2002256451}
         m_TargetAssemblyTypeName: Mainmenu, Assembly-CSharp
-        m_MethodName: GraphicsSettingsPanel
+        m_MethodName: GraphicsSettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11690,7 +11690,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2002256451}
         m_TargetAssemblyTypeName: Mainmenu, Assembly-CSharp
-        m_MethodName: SoundSettingsPanel
+        m_MethodName: SoundSettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13066,7 +13066,7 @@ GameObject:
   - component: {fileID: 1657931713}
   - component: {fileID: 1657931712}
   m_Layer: 5
-  m_Name: Esc_Mm_Panel
+  m_Name: Esc_Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15804,10 +15804,10 @@ RectTransform:
   - {fileID: 1678180230}
   - {fileID: 1711312265}
   - {fileID: 108118681}
-  - {fileID: 649867617}
   - {fileID: 223076429}
   - {fileID: 1098825461}
   - {fileID: 540930561}
+  - {fileID: 649867617}
   - {fileID: 1602064670}
   - {fileID: 1657931711}
   m_Father: {fileID: 0}
@@ -15943,18 +15943,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9385ee2813d6494b87dbcfa38c5f88b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MainMenu_Panel: {fileID: 1711312264}
-  MainMenu_Settings_Panel: {fileID: 108118680}
-  MainMenu_GameSettings_Panel: {fileID: 223076428}
-  MainMenu_GraphicsSettings_Panel: {fileID: 1098825460}
-  MainMenu_SoundSettings_Panel: {fileID: 540930560}
-  EscQuit_Panel: {fileID: 1657931710}
+  Mainmenu_Panel: {fileID: 1711312264}
+  Main_Settings_Panel: {fileID: 108118680}
+  Main_GameSettings_Panel: {fileID: 223076428}
+  Main_GraphicsSettings_Panel: {fileID: 1098825460}
+  Main_SoundSettings_Panel: {fileID: 540930560}
+  Main_Info_Panel: {fileID: 649867616}
   Trans_Panel: {fileID: 1602064669}
-  MainMenu_Info_Panel: {fileID: 649867616}
+  EscQuit_Panel: {fileID: 1657931710}
+  Main_Last_Panel_lvl1: {fileID: 0}
+  Main_Last_Panel_lvl2: {fileID: 0}
   EscYesBtn: {fileID: 2133372573}
   EscNoBtn: {fileID: 1562915754}
-  Last_Panel_lvl1: {fileID: 108118680}
-  Last_Panel_lvl2: {fileID: 223076428}
   clickBtn_AudioSource: {fileID: 2002256450}
 --- !u!1 &2002282247
 GameObject:
@@ -16994,7 +16994,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2002256451}
         m_TargetAssemblyTypeName: Mainmenu, Assembly-CSharp
-        m_MethodName: EscYes
+        m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -25,12 +25,13 @@ public class GameManager : MonoBehaviour
     public GameObject gameOverPanel;
     public GameObject gameFinishedPanel;
 
-    private bool waitingForChoice = false;
+    public bool waitingForStart = false;
+    public bool waitingForChoice = false;
 
     public EnemySpawner spawner;
     public ResourceManager manager;
     public TowerPlacer towerPlacer;
-    public PauseMenu pauseMenu;
+    public Pausemenu pauseMenu;
 
 
     private void Update()
@@ -46,12 +47,14 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+        waitingForStart = true;
         WelcomePanel.SetActive(true);
         Time.timeScale = 0f;
     }
 
     public void StartGame()
     {
+        waitingForStart = false;
         Time.timeScale = 1f;
 
         InvokeRepeating(nameof(TriggerTaxEvent), (taxInterval + taxInterval / 2), taxInterval);
@@ -64,8 +67,8 @@ public class GameManager : MonoBehaviour
     {
         if (!waitingForChoice)
         {
-            Time.timeScale = 0f; // Pause game
             pauseMenu.Resume();
+            Time.timeScale = 0f;
             towerPlacer.PanelsRemove();
             taxPanel.SetActive(true);
             waitingForChoice = true;

@@ -26,7 +26,6 @@ public class Mainmenu : MonoBehaviour
     [SerializeField] public AudioSource clickBtn_AudioSource;
 
     private int MainMenu_level = 0;
-    private bool BackButtonPressed = false;
     private bool EscMainmenu = false;
     private bool EscQuitPanelActive = false;
 
@@ -61,17 +60,14 @@ public class Mainmenu : MonoBehaviour
         //}
 
         //Initializing
-        Time.timeScale = 1f;
+        Mainmenu_Panel.SetActive(true);
         Main_Last_Panel_lvl1 = Main_Settings_Panel;
         Main_Last_Panel_lvl2 = Main_GameSettings_Panel;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) BackButtonPressed = true; //In case the user presses Esc store this info
-        if (BackButtonPressed) Back(); //If the user pressed Esc then run Back() method
-
-        LoadCurrentPanel(); //Displaying the correct panels
+        if (Input.GetKeyDown(KeyCode.Escape)) EscBack(); //In case the user presses Esc store this info
     }
 
     //Displaying the correct panels
@@ -83,7 +79,7 @@ public class Mainmenu : MonoBehaviour
     }
 
     //Stepping back in the mainmenu with Esc or with a Back button
-    public void Back()
+    public void EscBack()
     {
         if (MainMenu_level > 0)
         {
@@ -94,7 +90,14 @@ public class Mainmenu : MonoBehaviour
             EscQuitPanel(); // Show quit panel when back at level 0
         }
         clickBtn_AudioSource.Play(); //Playing the click sound
-        BackButtonPressed = false; // Reset flag after action
+        LoadCurrentPanel();
+    }
+
+    public void BtnBack()
+    {
+        MainMenu_level -= 1;
+        clickBtn_AudioSource.Play();
+        LoadCurrentPanel();
     }
 
     //Loading and starting the actual game
@@ -117,6 +120,7 @@ public class Mainmenu : MonoBehaviour
             Main_Last_Panel_lvl1 = panel1;
             Main_Last_Panel_lvl2 = panel2;
         }
+        LoadCurrentPanel();
     }
 
     public void Settings() => OpenMenu(1, Main_Settings_Panel);

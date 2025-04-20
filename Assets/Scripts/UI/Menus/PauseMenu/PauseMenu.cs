@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,12 +24,11 @@ public class Pausemenu : MonoBehaviour
 
     [SerializeField] private GameManager gameManager;
 
-    public bool GameIsPaused = false; //Stores if the game is paused
-    private int Pausemenu_level = -1;
-    private bool Pausemenu_BackButtonPressed = false; //Stores if the user pressed Esc or a Back button
-    private bool EscPausemenu = false;
-    private bool EscMmPanelActive = false;
-    private bool EscQuitPanelActive = false;
+    [SerializeField] private int timeScaleCheck;
+    [SerializeField] public bool GameIsPaused = false; //Stores if the game is paused
+    [SerializeField] private int Pausemenu_level = -1;
+    [SerializeField] private bool EscMmPanelActive = false;
+    [SerializeField] private bool EscQuitPanelActive = false;
 
     private void Start()
     {
@@ -57,26 +57,8 @@ public class Pausemenu : MonoBehaviour
 
     void Update()
     {
+        timeScaleCheck = Convert.ToInt32(Time.timeScale);
         CheckInput(); //Detecting if the user presses Esc Button
-
-        if (GameIsPaused)
-        {
-            if (!EscMmPanelActive && !EscQuitPanelActive)
-            {
-                if (Pausemenu_BackButtonPressed) Back();
-                LoadCurrentPanel(); //Displaying the correct panels
-            }
-            if (EscMmPanelActive)
-            {
-                EscMm_Panel.SetActive(false);
-                Trans_Panel.SetActive(false);
-            }
-            if (EscQuitPanelActive)
-            {
-                EscQuit_Panel.SetActive(false);
-                Trans_Panel.SetActive(false);
-            }
-        }
     }
 
     //Detecting if the user presses Esc Button
@@ -90,20 +72,16 @@ public class Pausemenu : MonoBehaviour
                 {
                     Resume();
                 }
-
                 else
                 {
-                    Pausemenu_BackButtonPressed = true;
+                    EscBack();
                 }
             }
             else
             {
-                Pausemenu_level = 0;
-                Pause_Last_Panel_lvl1 = Pause_Settings_Panel;
-                Pause_Last_Panel_lvl2 = Pause_GameSettings_Panel;
                 Pause();
-                LoadCurrentPanel(); //Displaying the correct panels
             }
+            LoadCurrentPanel();
         }
     }
 
@@ -116,14 +94,30 @@ public class Pausemenu : MonoBehaviour
     }
 
     //Stepping back in the pausemenu with Esc or with a Back button
-    public void Back()
+    public void EscBack()
     {
-        if (Pausemenu_level > 0)
+        if (!EscMmPanelActive && !EscQuitPanelActive)
         {
             Pausemenu_level -= 1;
         }
-        Pausemenu_BackButtonPressed = false;
+        else if (EscMmPanelActive)
+        {
+            EscMm_Panel.SetActive(false);
+            EscMmPanelActive = false;
+        }
+        else
+        {
+            EscQuit_Panel.SetActive(false);
+            EscQuitPanelActive = false;
+        }
         clickBtn_AudioSource.Play();
+    }
+
+    public void BtnBack()
+    {
+        Pausemenu_level -= 1;
+        clickBtn_AudioSource.Play();
+        LoadCurrentPanel();
     }
 
     //Unpausing the game
@@ -158,6 +152,7 @@ public class Pausemenu : MonoBehaviour
             Pause_Last_Panel_lvl1 = panel1;
             Pause_Last_Panel_lvl2 = panel2;
         }
+        LoadCurrentPanel();
     }
 
     public void Settings() => OpenMenu(1, Pause_Settings_Panel);
@@ -179,50 +174,33 @@ public class Pausemenu : MonoBehaviour
     //"Are u sure u want to return?" Panel
     public void EscMmPanel()
     {
-        if (Pausemenu_level == 0 && !EscMmPanelActive)
-        {
-            EscMm_Panel.SetActive(true);
-            EscMmPanelActive = true;
-            Trans_Panel.SetActive(true);
-        }
-        else
-        {
-            EscMm_Panel.SetActive(false);
-            EscMmPanelActive = false;
-            Trans_Panel.SetActive(false);
-        }
+        EscMm_Panel.SetActive(true);
+        EscMmPanelActive = true;
+        Trans_Panel.SetActive(true);
     }
 
     //"Are u sure u want to quit?" Panel
     public void EscQuitPanel()
     {
-        if (Pausemenu_level == 0 && !EscQuitPanelActive)
-        {
-            EscQuit_Panel.SetActive(true);
-            EscQuitPanelActive = true;
-            Trans_Panel.SetActive(true);
-        }
-        else
-        {
-            EscQuit_Panel.SetActive(false);
-            EscQuitPanelActive = false;
-            Trans_Panel.SetActive(false);
-        }
+        EscQuit_Panel.SetActive(true);
+        EscQuitPanelActive = true;
+        Trans_Panel.SetActive(true);
     }
 
     //Are u sure u want to quit?->No
     public void EscNo()
     {
-        EscMm_Panel.SetActive(false);
-        EscQuit_Panel.SetActive(false);
-        EscMmPanelActive = false;
-        EscQuitPanelActive = false;
+        if (EscMmPanelActive)
+        {
+            EscMm_Panel.SetActive(false);
+            EscMmPanelActive = false;
+        }
+        else
+        {
+            EscQuit_Panel.SetActive(false);
+            EscQuitPanelActive = false;
+        }
         Trans_Panel.SetActive(false);
-    }
-
-    public void ReturnToMmBtn()
-    {
-        EscMmPanel();
     }
 
     //Returning to the mainmenu
@@ -230,11 +208,6 @@ public class Pausemenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("Mainmenu", LoadSceneMode.Single);
-    }
-
-    public void QuitBtn()
-    {
-        EscQuitPanel();
     }
 
     //Close the whole game

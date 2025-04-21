@@ -8,6 +8,7 @@ public class Mainmenu : MonoBehaviour
 {
     [Header("PANELS")]
     [SerializeField] private GameObject Mainmenu_Panel;
+    [SerializeField] private GameObject DifficultySelector_Panel;
     [SerializeField] private GameObject Main_Settings_Panel;
     [SerializeField] private GameObject Main_GameSettings_Panel;
     [SerializeField] private GameObject Main_GraphicsSettings_Panel;
@@ -45,19 +46,6 @@ public class Mainmenu : MonoBehaviour
         {
             button.onClick.AddListener(() => clickBtn_AudioSource.Play());
         }
-
-        //if (SceneCounter.MainmenuLoaded == 1)
-        //{
-        //    DoNotDestroyAudioSource.instance.GetComponent<AudioSource>().Play();
-        //}
-        //if (SceneCounter.MainmenuLoaded > 1 && SceneCounter.FromLevelSelector == false)
-        //{
-        //    DoNotDestroyAudioSource.instance.GetComponent<AudioSource>().Play();
-        //}
-        //if (SceneCounter.FromLevelSelector == false)
-        //{
-        //    DoNotDestroyAudioSource.instance.GetComponent<AudioSource>().Play();
-        //}
 
         //Initializing
         Mainmenu_Panel.SetActive(true);
@@ -123,6 +111,7 @@ public class Mainmenu : MonoBehaviour
         LoadCurrentPanel();
     }
 
+    public void Difficulty() => OpenMenu(1, DifficultySelector_Panel);
     public void Settings() => OpenMenu(1, Main_Settings_Panel);
     public void GameSettings() => OpenMenu(2, Main_Settings_Panel, Main_GameSettings_Panel);
     public void GraphicsSettings() => OpenMenu(2, Main_Settings_Panel, Main_GraphicsSettings_Panel);
